@@ -9,7 +9,7 @@ type GameCardProps = {
 
 export const GameCard = ({ game }: GameCardProps) => {
   return (
-    <Card>
+    <Card className="pt-0">
       {game.background_image ? (
         <img
           src={game.background_image}
