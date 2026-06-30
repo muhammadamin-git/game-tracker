@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GamesIdRouteImport } from './routes/games/$id'
 
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,32 +31,43 @@ const GamesIdRoute = GamesIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/wishlist': typeof WishlistRoute
   '/games/$id': typeof GamesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/wishlist': typeof WishlistRoute
   '/games/$id': typeof GamesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/wishlist': typeof WishlistRoute
   '/games/$id': typeof GamesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/games/$id'
+  fullPaths: '/' | '/wishlist' | '/games/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/games/$id'
-  id: '__root__' | '/' | '/games/$id'
+  to: '/' | '/wishlist' | '/games/$id'
+  id: '__root__' | '/' | '/wishlist' | '/games/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  WishlistRoute: typeof WishlistRoute
   GamesIdRoute: typeof GamesIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  WishlistRoute: WishlistRoute,
   GamesIdRoute: GamesIdRoute,
 }
 export const routeTree = rootRouteImport
