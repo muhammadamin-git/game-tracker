@@ -5,7 +5,7 @@ export const GameCardSkeleton = () => {
   return (
     <Card className="pt-0">
       <Skeleton className="w-full h-48" />
-      <CardContent>
+      <CardContent className="flex flex-col gap-1">
         <Skeleton className="h-5 w-3/4" />
         <div className="flex items-center justify-between">
           <Skeleton className="h-4 w-12" />

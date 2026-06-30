@@ -1,4 +1,5 @@
 import type { GameDetails } from "@/features/games/schemas/gameSchema";
+import { WishlistButton } from "@/features/wishlist/components/WishlistButton";
 import { Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
@@ -22,7 +23,10 @@ export const GameDetail = ({ game }: GameDetailProps) => {
       )}
 
       <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold">{game.name}</h1>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="text-3xl font-bold">{game.name}</h1>
+          <WishlistButton game={game} />
+        </div>
 
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
           <span className="flex items-center gap-1">
