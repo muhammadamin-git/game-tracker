@@ -9,9 +9,8 @@ export const Route = createFileRoute("/games/$id")({
 
 function GamePage() {
   const { id } = Route.useParams();
-  const numericId = Number(id);
 
-  const { data, isPending, isError, refetch, error } = useGame(numericId);
+  const { data, isPending, isError, refetch, error } = useGame(id);
 
   if (isPending) return <p>Loading...</p>;
   if (isError)

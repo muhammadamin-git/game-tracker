@@ -9,7 +9,7 @@ export const getGames = async () => {
   return GameResponseSchema.parse(response.data);
 };
 
-export const getGameById = async (id: number) => {
+export const getGameById = async (id: string) => {
   const response = await client.get(`/games/${id}`);
   return GameDetailSchema.parse(response.data);
 };
