@@ -4,7 +4,7 @@ import { ErrorMessage } from "@/components/ErrorMessage";
 import { GameDetail } from "@/features/games/components/GameDetail";
 import { GameDetailSkeleton } from "@/features/games/components/GameDetailSkeleton";
 
-export const Route = createFileRoute("/games/$id")({
+export const Route = createFileRoute("/_app/games/$id")({
   component: GamePage,
 });
 

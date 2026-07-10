@@ -9,86 +9,180 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WishlistRouteImport } from './routes/wishlist'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as GamesIdRouteImport } from './routes/games/$id'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AppWishlistRouteImport } from './routes/_app/wishlist'
+import { Route as AppGamesIdRouteImport } from './routes/_app/games/$id'
 
-const WishlistRoute = WishlistRouteImport.update({
-  id: '/wishlist',
-  path: '/wishlist',
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const GamesIdRoute = GamesIdRouteImport.update({
+const AuthRegisterRoute = AuthRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AppWishlistRoute = AppWishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppGamesIdRoute = AppGamesIdRouteImport.update({
   id: '/games/$id',
   path: '/games/$id',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/wishlist': typeof WishlistRoute
-  '/games/$id': typeof GamesIdRoute
+  '/': typeof AppIndexRoute
+  '/wishlist': typeof AppWishlistRoute
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
+  '/games/$id': typeof AppGamesIdRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/wishlist': typeof WishlistRoute
-  '/games/$id': typeof GamesIdRoute
+  '/': typeof AppIndexRoute
+  '/wishlist': typeof AppWishlistRoute
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
+  '/games/$id': typeof AppGamesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/wishlist': typeof WishlistRoute
-  '/games/$id': typeof GamesIdRoute
+  '/_app': typeof AppRouteRouteWithChildren
+  '/_auth': typeof AuthRouteRouteWithChildren
+  '/_app/wishlist': typeof AppWishlistRoute
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/register': typeof AuthRegisterRoute
+  '/_app/': typeof AppIndexRoute
+  '/_app/games/$id': typeof AppGamesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/wishlist' | '/games/$id'
+  fullPaths: '/' | '/wishlist' | '/login' | '/register' | '/games/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/wishlist' | '/games/$id'
-  id: '__root__' | '/' | '/wishlist' | '/games/$id'
+  to: '/' | '/wishlist' | '/login' | '/register' | '/games/$id'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_auth'
+    | '/_app/wishlist'
+    | '/_auth/login'
+    | '/_auth/register'
+    | '/_app/'
+    | '/_app/games/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  WishlistRoute: typeof WishlistRoute
-  GamesIdRoute: typeof GamesIdRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/wishlist': {
-      id: '/wishlist'
-      path: '/wishlist'
-      fullPath: '/wishlist'
-      preLoaderRoute: typeof WishlistRouteImport
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/': {
+      id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/games/$id': {
-      id: '/games/$id'
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_app/wishlist': {
+      id: '/_app/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof AppWishlistRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/games/$id': {
+      id: '/_app/games/$id'
       path: '/games/$id'
       fullPath: '/games/$id'
-      preLoaderRoute: typeof GamesIdRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppGamesIdRouteImport
+      parentRoute: typeof AppRouteRoute
     }
   }
 }
 
+interface AppRouteRouteChildren {
+  AppWishlistRoute: typeof AppWishlistRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppGamesIdRoute: typeof AppGamesIdRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppWishlistRoute: AppWishlistRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppGamesIdRoute: AppGamesIdRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
+interface AuthRouteRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  WishlistRoute: WishlistRoute,
-  GamesIdRoute: GamesIdRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

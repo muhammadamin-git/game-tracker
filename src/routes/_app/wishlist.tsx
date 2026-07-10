@@ -1,7 +1,7 @@
 import { WishlistContainer } from "@/features/wishlist/components/WishlistContainer";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/wishlist")({
+export const Route = createFileRoute("/_app/wishlist")({
   component: WishlistPage,
 });
 
